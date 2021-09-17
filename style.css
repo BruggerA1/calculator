@@ -1,0 +1,8 @@
+/* Global Properties*/
+* {
+	margin: 0;
+	padding: 0;
+
+	/* Temp */
+	border: dashed 1px;
+}
