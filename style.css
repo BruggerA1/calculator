@@ -1,8 +1,93 @@
 /* Global Properties*/
+:root {
+	--buttonSize: 60px;
+}
+
 * {
+	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
 
 	/* Temp */
 	border: dashed 1px;
+}
+
+/* Classes */
+.flex-row {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+}
+
+.flex-col {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Containers */
+#container-head {
+	height: 15vh;
+}
+
+#container-calc {
+	height: 80vh;
+}
+
+#container-foot {
+	height: 5vh;
+}
+
+/* Calculator */
+#calc {
+	height: calc(7 * var(--buttonSize));
+	padding: 0px;
+	border: solid 10px black;
+	border-radius: 10px;
+}
+
+/* Display */
+#calc-display {
+	height: calc(2 * var(--buttonSize));
+	width: calc(4 * var(--buttonSize));
+}
+
+#display-history {
+	border: solid 1px;
+	height: 30%;
+	width: calc(4 * var(--buttonSize));
+}
+
+#display-entry {
+	border: solid 1px;
+	height: 70%;
+	width: calc(4 * var(--buttonSize));
+}
+
+/* Buttons */
+#calc-buttons {
+	height: calc(5 * var(--buttonSize));
+	width: calc(3 * var(--buttonSize));
+}
+
+#calc-numbers {
+	height: calc(5 * var(--buttonSize));
+	flex-wrap: wrap;
+}
+
+.calc-button {
+	height: calc(var(--buttonSize));
+	width: calc(var(--buttonSize));
+}
+
+#calc-0 {
+	width: calc(3 * var(--buttonSize));
+}
+
+/* temp  */
+button:hover {
+	cursor: pointer;
+	border: black solid 1px;
 }
