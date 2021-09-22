@@ -50,15 +50,18 @@ function inputNum() {
 	console.log(num);
 	DISPLAY.digit.push(num);
 	let fullNum = DISPLAY.digit.reduce((prev, curr) => prev.toString() + curr.toString());
-	DISPLAY.entry.innerText = fullNum
-	console.log(fullNum)
+	DISPLAY.entry.innerText = fullNum;
+	console.log(fullNum);
+	if(this.innerText == '.') {
+		NUMKEY['decimal'].disabled = true;
+	}
 }
 
 function inputEquals() {
 	console.log(this.innerText);
 }
 
-function inputAdd(){
+function inputAdd() {
 	console.log(this.innerText);
 }
 
