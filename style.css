@@ -8,7 +8,6 @@
 	padding: 0;
 
 	/* Temp */
-	border: dashed 1px;
 }
 
 /* Classes */
@@ -35,9 +34,23 @@
 }
 
 /* Calculator */
+#calc{
+	border: solid 2px;
+}
 /* Display */
 #calc-display {
 	height: calc(2 * var(--buttonSize));
+	align-items: stretch;
+}
+
+#display-history{
+	height: 20%;
+	border: dashed 1px;
+}
+
+#display-entry{
+	height: 80%;
+	border: dashed 1px;
 }
 
 /* Buttons */
@@ -52,7 +65,8 @@
 }
 
 #calc-0 {
-	width: calc(3 * var(--buttonSize));
+	width: calc(2 * var(--buttonSize));
 }
+
 
 /* temp  */
