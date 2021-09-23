@@ -23,10 +23,12 @@
 /* Containers */
 #container-head {
 	height: 15vh;
+
 }
 
 #container-calc {
 	height: 80vh;
+	border: dashed 1px;
 }
 
 #container-foot {
@@ -53,7 +55,6 @@
 	border-bottom: dashed 1px;
 	display: flex;
 	flex-direction: column-reverse;
-	overflow: auto;
 
 }
 

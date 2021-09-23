@@ -12,9 +12,11 @@ const DISPLAY = {
 		DISPLAY.digit = [];
 		DISPLAY.entry.innerText = '0.0';
 	},
+	// CLEAN THIS UP (needs arg)
 	addHistory: () => {
 		DISPLAY.historyReg.push(DISPLAY.entry.innerText);
 		DISPLAY.history.innerText = DISPLAY.historyReg.join(' ');
+		DISPLAY.entry.innerText = '0.0';
 	}
 }
 
@@ -50,6 +52,7 @@ const MEMORY = {
 	currentVal: 0,
 	previousVal: 0,
 	update: () => {
+		MEMORY.previousVal = MEMORY.currentVal;
 		MEMORY.currentVal = parseFloat(DISPLAY.entry.innerText);
 	}
 }
@@ -62,7 +65,7 @@ function init() {
 	DISPLAY.init();
 }
 
-//clean this up
+//clean this up (move to NUMKEY)
 function inputNum() {
 	if (this.innerText == '.') {
 		NUMKEY['decimal'].disabled = true;
@@ -76,13 +79,18 @@ function inputNum() {
 
 	MEMORY.update();
 }
-
+//CLEAN THIS UP (Do something similar to NUMKEY with a loop.)
 function inputEquals() {
 	console.log(this.innerText);
 }
 
 function inputAdd() {
 	console.log(this.innerText);
+	DISPLAY.addHistory();
+	DISPLAY.historyReg.push('+');
+	DISPLAY.history.innerText = DISPLAY.historyReg.join(' ');
+	MEMORY.update();
+	DISPLAY.digit = [];
 }
 
 function inputSubtract() {
