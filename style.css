@@ -6,7 +6,7 @@
 * {
 	margin: 0;
 	padding: 0;
-
+	box-sizing: border-box;
 	/* Temp */
 }
 
@@ -38,20 +38,31 @@
 	border: solid 2px;
 }
 /* Display */
+.display {
+	width: calc(4*var(--buttonSize));
+	text-align: right;
+	padding-right: 10px;
+}
+
 #calc-display {
 	height: calc(2 * var(--buttonSize));
-	align-items: stretch;
 }
 
 #display-history{
-	height: 20%;
-	border: dashed 1px;
+	height: calc(0.45*2*var(--buttonSize));
+	border-bottom: dashed 1px;
+	display: flex;
+	flex-direction: column-reverse;
+	overflow: auto;
+
 }
 
 #display-entry{
-	height: 80%;
-	border: dashed 1px;
+	line-height: calc(0.55*2*var(--buttonSize));
+	justify-content: right;
+	overflow: hidden;
 }
+
 
 /* Buttons */
 #calc-numbers {
@@ -67,6 +78,5 @@
 #calc-0 {
 	width: calc(2 * var(--buttonSize));
 }
-
 
 /* temp  */

@@ -3,9 +3,18 @@ const DISPLAY = {
 	history: document.getElementById('display-history'),
 	entry: document.getElementById('display-entry'),
 	digit: [],
+	historyReg: [],
 	init: () => {
 		DISPLAY.history.innerText = 'History (temp)';
-		DISPLAY.entry.innerText = DISPLAY.digit;
+		DISPLAY.entry.innerText = '0.0';
+	},
+	clear: () => {
+		DISPLAY.digit = [];
+		DISPLAY.entry.innerText = '0.0';
+	},
+	addHistory: () => {
+		DISPLAY.historyReg.push(DISPLAY.entry.innerText);
+		DISPLAY.history.innerText = DISPLAY.historyReg.join(' ');
 	}
 }
 
@@ -37,6 +46,15 @@ const OPERATIONS = {
 	},
 }
 
+const MEMORY = {
+	currentVal: 0,
+	previousVal: 0,
+	update: () => {
+		MEMORY.currentVal = parseFloat(DISPLAY.entry.innerText);
+	}
+}
+
+
 // Functions
 function init() {
 	NUMKEY.init();
@@ -46,15 +64,17 @@ function init() {
 
 //clean this up
 function inputNum() {
-	let num = this.innerText;
-	console.log(num);
-	DISPLAY.digit.push(num);
-	let fullNum = DISPLAY.digit.reduce((prev, curr) => prev.toString() + curr.toString());
-	DISPLAY.entry.innerText = fullNum;
-	console.log(fullNum);
-	if(this.innerText == '.') {
+	if (this.innerText == '.') {
 		NUMKEY['decimal'].disabled = true;
+		if (DISPLAY.digit[0] == undefined) {
+			DISPLAY.digit.push(0);
+		}
 	}
+
+	DISPLAY.digit.push(this.innerText);
+	DISPLAY.entry.innerText = DISPLAY.digit.reduce((prev, curr) => prev.toString() + curr.toString());
+
+	MEMORY.update();
 }
 
 function inputEquals() {
@@ -76,10 +96,6 @@ function inputMultiply() {
 function inputDivide() {
 	console.log(this.innerText);
 }
-
-
-
-
 
 // Initialization
 init();
