@@ -55,10 +55,12 @@
 	border-bottom: dashed 1px;
 	display: flex;
 	flex-direction: column-reverse;
-
+	overflow: hidden;
+	
 }
 
 #display-entry{
+	height: calc(0.55*2*var(--buttonSize));
 	line-height: calc(0.55*2*var(--buttonSize));
 	justify-content: right;
 	overflow: hidden;

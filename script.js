@@ -1,4 +1,129 @@
 // Objects
+const MEM = {
+	value: {
+		current: null,
+		previous: null,
+		operator: null,
+	},
+	entry: {
+		display: document.getElementById('display-entry'),
+		register: [],
+		get: () => MEM.entry.display.innerText,
+		set: data => MEM.entry.display.innerText = data,
+	},
+	history: {
+		display: document.getElementById('display-history'),
+		register: [],
+		set: data => MEM.history.display.innerText = data,
+	},
+	update: (op) => {
+		MEM.history.register.push(MEM.entry.get());
+		MEM.history.register.push(op);
+		MEM.history.set(MEM.history.register.join(' '));
+		MEM.value.previous = MEM.entry.get();
+		MEM.value.operator = op;
+		MEM.value.current = 0;
+		MEM.entry.set('0.0');
+		MEM.entry.register = [];
+	},
+	init: () => {
+		MEM.entry.set('0.0');
+		MEM.history.set('History (temp)');
+		MEM.value.current = parseFloat(0);
+		MEM.value.previous = parseFloat(0);
+	},
+}
+
+const NUM = {
+	key: {
+		'dec': document.getElementById('calc-decimal'),
+	},
+	value: {
+		'dec': '.',
+	},
+	init: () => {
+		for (let i = 0; i < 10; i++) {
+			NUM.key[i] = document.getElementById(`calc-${i}`);
+			NUM.value[i] = document.getElementById(`calc-${i}`).innerText = i;
+			NUM.key[i].addEventListener('click', () => NUM.input(i));
+		}
+		NUM.key['dec'].innerText = NUM.value['dec'];
+		NUM.key['dec'].addEventListener('click', () => NUM.input('.'));
+	},
+	input: num => {
+		if (num == '.') {
+			NUM.key['dec'].disabled = true;
+			if (MEM.entry.register[0] == undefined) MEM.entry.register.push(0);
+		}
+		MEM.entry.register.push(num);
+		MEM.entry.set(MEM.entry.register.join(''));
+		MEM.value.current = MEM.entry.get();
+	},
+}
+
+const OPS = {
+	equals: {
+		key: document.getElementById('calc-equals'),
+		value: '=',
+		operate: () => {
+			MEM.value.current = MEM.entry.get();
+			MEM.history.register.push(MEM.entry.get());
+			MEM.history.set(MEM.history.register.join(' '));
+			MEM.entry.set('0.0');
+		},
+	},
+	add: {
+		key: document.getElementById('calc-add'),
+		value: '+',
+		operate: () => {
+			MEM.update('+');
+		},
+	},
+	subtract: {
+		key: document.getElementById('calc-subtract'),
+		value: '-',
+		operate: () => { 
+			MEM.update('-');
+		},
+	},
+	multiply: {
+		key: document.getElementById('calc-multiply'),
+		value: '•',
+		operate: () => {
+			MEM.update('•');
+		},
+	},
+	divide: {
+		key: document.getElementById('calc-divide'),
+		value: '÷',
+		operate: () => { 
+			MEM.update('÷');
+		},
+	},
+	init: () => {
+		OPS.equals.key.innerText = OPS.equals.value;
+		OPS.equals.key.addEventListener('click', OPS.equals.operate);
+
+		OPS.add.key.innerText = OPS.add.value;
+		OPS.add.key.addEventListener('click', OPS.add.operate);
+
+		OPS.subtract.key.innerText = OPS.subtract.value;
+		OPS.subtract.key.addEventListener('click', OPS.subtract.operate);
+
+		OPS.multiply.key.innerText = OPS.multiply.value;
+		OPS.multiply.key.addEventListener('click', OPS.multiply.operate);
+
+		OPS.divide.key.innerText = OPS.divide.value;
+		OPS.divide.key.addEventListener('click', OPS.divide.operate);
+	},
+}
+MEM.init();
+NUM.init();
+OPS.init();
+
+/*
+
+// Objects
 const DISPLAY = {
 	history: document.getElementById('display-history'),
 	entry: document.getElementById('display-entry'),
@@ -107,3 +232,4 @@ function inputDivide() {
 
 // Initialization
 init();
+*/
