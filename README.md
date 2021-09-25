@@ -9,7 +9,6 @@
 * Calculates Numbers
 
 # TO DO #
-* Working Display (Entries / History)
-* Clear Button
+* Clear / Backspace Button
 * Working Math
 * Add Math Functions (SQUARE ROOT, EXPONENT)
