@@ -4,7 +4,7 @@ const MEM = {
 		previous: null,
 		get: () => MEM.value.current,
 		getOld: () => MEM.value.previous,
-		set: value => MEM.value.current = parseFloat(value),
+		set: value => MEM.value.current = value,
 		update: value => {
 			// Set previous value to current value. 
 			MEM.value.previous = MEM.value.get();
@@ -15,7 +15,7 @@ const MEM = {
 	answer: {
 		value: null,
 		get: () => MEM.answer.value,
-		set: value => MEM.answer.value = parseFloat(value),
+		set: value => MEM.answer.value = value,
 	},
 	operation: {
 		current: null,
@@ -42,8 +42,6 @@ const MEM = {
 			MEM.value.set(MEM.entry.get());
 
 			// DEBUG MODE
-			console.log(`MEMORY: Current Value - ${MEM.value.get()}`);
-			console.log(`MEMORY: Previous Value - ${MEM.value.getOld()}`);
 
 		},
 	},
@@ -74,11 +72,10 @@ const NUM = {
 		'dec': '.',
 	},
 	input: value => {
-		console.log(`input: ${value}`);
-		// ********UPDATE********
 		// Handle decimal input.
 		if (value == '.') {
-			console.log('decimal alert');
+			NUM.key['dec'].disabled = true;
+			if (MEM.entry.register[0] == undefined) MEM.entry.update(0);
 		};
 		// Add number to display
 		MEM.entry.update(value);
@@ -102,6 +99,7 @@ const OPS = {
 	equals: {
 		value: '=',
 		input: () => {
+			OPS.input('equals');
 		},
 		// Add Input Functions
 	},
@@ -112,7 +110,7 @@ const OPS = {
 			OPS.input('add')
 	},
 		operate: () => {
-			return (MEM.answer.get() == null) ? MEM.value.getOld() + MEM.value.get() : MEM.answer.get() + MEM.value.get();
+			return (MEM.answer.get() == null) ? parseFloat(MEM.value.getOld()) + parseFloat(MEM.value.get()) : parseFloat(MEM.answer.get()) + parseFloat(MEM.value.get());
 		}
 	},
 	subtract: {
@@ -122,7 +120,7 @@ const OPS = {
 			OPS.input('subtract');
 		},
 		operate: () => {
-			return (MEM.answer.get() == null) ?  MEM.value.getOld() - MEM.value.get() : MEM.answer.get() - MEM.value.get();
+			return (MEM.answer.get() == null) ? parseFloat(MEM.value.getOld()) - parseFloat(MEM.value.get()) : parseFloat(MEM.answer.get()) - parseFloat(MEM.value.get());
 		}
 	},
 	multiply: {
@@ -132,7 +130,7 @@ const OPS = {
 			OPS.input('multiply');
 		},
 		operate: () => {
-			return (MEM.answer.get() == null) ? MEM.value.getOld() * MEM.value.get() : MEM.answer.get() * MEM.value.get();
+			return (MEM.answer.get() == null) ? parseFloat(MEM.value.getOld()) * parseFloat(MEM.value.get()) : parseFloat(MEM.answer.get()) * parseFloat(MEM.value.get());
 		},
 	},
 	divide: {
@@ -142,7 +140,7 @@ const OPS = {
 			OPS.input('divide');
 		},
 		operate: () => {
-			return (MEM.answer.get() == null) ? MEM.value.getOld() / MEM.value.get() : MEM.answer.get() / MEM.value.get();
+			return (MEM.answer.get() == null) ? parseFloat(MEM.value.getOld()) / parseFloat(MEM.value.get()) : parseFloat(MEM.answer.get()) / parseFloat(MEM.value.get());
 		},
 	},
 	init: () => {
@@ -155,7 +153,6 @@ const OPS = {
 	},
 	input: (opValue) => {
 		MEM.operation.update(OPS[opValue].name);
-		console.log('yas');
 		MEM.history.update(MEM.entry.get());
 		MEM.history.update(OPS[opValue].value);
 		MEM.entry.register = [];
@@ -163,15 +160,12 @@ const OPS = {
 			MEM.entry.set(0);
 		} else {
 			MEM.answer.set(OPS[MEM.operation.getOld()].operate())
-			console.log(`MEMORY: Answer set to ${MEM.answer.get()}`)
 			MEM.entry.set(MEM.answer.get());
 		}
-		console.log(`MEMORY: Operation set to ${OPS[opValue].value}`);
 		MEM.operation.set(OPS[opValue].name);
 	
 		MEM.value.update(MEM.entry.get());
-		console.log(`MEMORY: Current Value - ${MEM.value.get()}`)
-		console.log(`MEMORY: Previous Value - ${MEM.value.getOld()}`)	
+		NUM.key['dec'].disabled = false;
 
 	}
 };
@@ -208,10 +202,11 @@ init();
 		MEM.entry.register = [];
 		MEM.history.register = [];
 		MEM.history.set('');
-		MEM.value.set(0)
-		MEM.value.update(0);
-		MEM.entry.update();
+		MEM.entry.update(null);
 		MEM.answer.set(null);
 		MEM.operation.set(null);
+		MEM.value.set(null);
+		MEM.value.update(null);
+
 	});
 }
