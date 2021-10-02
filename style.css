@@ -23,7 +23,6 @@
 /* Containers */
 #container-head {
 	height: 15vh;
-
 }
 
 #container-calc {
@@ -36,12 +35,12 @@
 }
 
 /* Calculator */
-#calc{
+#calc {
 	border: solid 2px;
 }
 /* Display */
 .display {
-	width: calc(4*var(--buttonSize));
+	width: calc(4 * var(--buttonSize));
 	text-align: right;
 	padding-right: 10px;
 }
@@ -50,22 +49,20 @@
 	height: calc(2 * var(--buttonSize));
 }
 
-#display-history{
-	height: calc(0.45*2*var(--buttonSize));
+#display-history {
+	height: calc(0.45 * 2 * var(--buttonSize));
 	border-bottom: dashed 1px;
 	display: flex;
 	flex-direction: column-reverse;
 	overflow: hidden;
-	
 }
 
-#display-entry{
-	height: calc(0.55*2*var(--buttonSize));
-	line-height: calc(0.55*2*var(--buttonSize));
+#display-entry {
+	height: calc(0.55 * 2 * var(--buttonSize));
+	line-height: calc(0.55 * 2 * var(--buttonSize));
 	justify-content: right;
 	overflow: hidden;
 }
-
 
 /* Buttons */
 #calc-numbers {

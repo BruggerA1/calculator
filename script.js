@@ -24,7 +24,9 @@ const MEM = {
 		getOld: () => MEM.operation.previous,
 		set: value => MEM.operation.current = value,
 		update: value => {
+			// Set previous value to current value. 
 			MEM.operation.previous = MEM.operation.get();
+			// Set current value to passed variable. 
 			MEM.operation.set(value);
 		}
 	},
@@ -40,9 +42,6 @@ const MEM = {
 			MEM.entry.set(MEM.entry.register.join(''));
 			// Get the number displayed in the entry screen and set it as the current value.
 			MEM.value.set(MEM.entry.get());
-
-			// DEBUG MODE
-
 		},
 	},
 	history: {
@@ -75,11 +74,15 @@ const NUM = {
 		// Handle decimal input.
 		if (value == '.') {
 			NUM.key['dec'].disabled = true;
+			// Add zero to decimal input '.' => '0.'
 			if (MEM.entry.register[0] == undefined) MEM.entry.update(0);
 		};
+		// Handle New Equation
+		if (MEM.operation.get() == 'equals') {
+			MEM.answer.set(null);
+		}
 		// Add number to display
 		MEM.entry.update(value);
-
 	},
 	init: () => {
 		for (let i = 0; i < 10; i++) {
@@ -97,18 +100,12 @@ const NUM = {
 
 const OPS = {
 	equals: {
+		name: 'equals',
 		value: '=',
-		input: () => {
-			OPS.input('equals');
-		},
-		// Add Input Functions
 	},
 	add: {
 		name: 'add',
 		value: '+',
-		input: () => {
-			OPS.input('add')
-	},
 		operate: () => {
 			return (MEM.answer.get() == null) ? parseFloat(MEM.value.getOld()) + parseFloat(MEM.value.get()) : parseFloat(MEM.answer.get()) + parseFloat(MEM.value.get());
 		}
@@ -116,9 +113,6 @@ const OPS = {
 	subtract: {
 		name: 'subtract',
 		value: '-',
-		input: () => {
-			OPS.input('subtract');
-		},
 		operate: () => {
 			return (MEM.answer.get() == null) ? parseFloat(MEM.value.getOld()) - parseFloat(MEM.value.get()) : parseFloat(MEM.answer.get()) - parseFloat(MEM.value.get());
 		}
@@ -126,9 +120,6 @@ const OPS = {
 	multiply: {
 		name: 'multiply',
 		value: '•',
-		input: () => {
-			OPS.input('multiply');
-		},
 		operate: () => {
 			return (MEM.answer.get() == null) ? parseFloat(MEM.value.getOld()) * parseFloat(MEM.value.get()) : parseFloat(MEM.answer.get()) * parseFloat(MEM.value.get());
 		},
@@ -136,37 +127,44 @@ const OPS = {
 	divide: {
 		name: 'divide',
 		value: '÷',
-		input: () => {
-			OPS.input('divide');
-		},
 		operate: () => {
 			return (MEM.answer.get() == null) ? parseFloat(MEM.value.getOld()) / parseFloat(MEM.value.get()) : parseFloat(MEM.answer.get()) / parseFloat(MEM.value.get());
 		},
 	},
 	init: () => {
 		let operationArray = ['equals', 'add', 'subtract', 'multiply', 'divide'];
+		// Initialize operations
 		operationArray.forEach(operation => {
 			OPS[operation].key = document.getElementById(`calc-${operation}`);
 			OPS[operation].key.innerText = OPS[operation].value;
-			OPS[operation].key.addEventListener('click', OPS[operation].input);
+			OPS[operation].key.addEventListener('click', () => OPS.input(operation));
 		});
 	},
 	input: (opValue) => {
+		// Update Operation
 		MEM.operation.update(OPS[opValue].name);
+		// Update History
 		MEM.history.update(MEM.entry.get());
+		// Add Operator to History
 		MEM.history.update(OPS[opValue].value);
+		// Reset Entry Register
 		MEM.entry.register = [];
+		// set entry to 0 if first operation.
 		if (MEM.operation.getOld() == null) {
 			MEM.entry.set(0);
 		} else {
-			MEM.answer.set(OPS[MEM.operation.getOld()].operate())
+			// set answer to result of last operation.
+			if (MEM.operation.getOld() != 'equals') {
+				MEM.answer.set(OPS[MEM.operation.getOld()].operate());
+			}
+			// set entry to the answer.
 			MEM.entry.set(MEM.answer.get());
+			//MEM.answer.set(null);
 		}
-		MEM.operation.set(OPS[opValue].name);
-	
+		// Set current value to entry.
 		MEM.value.update(MEM.entry.get());
+		// reset decimal.
 		NUM.key['dec'].disabled = false;
-
 	}
 };
 
@@ -205,8 +203,8 @@ init();
 		MEM.entry.update(null);
 		MEM.answer.set(null);
 		MEM.operation.set(null);
+		MEM.operation.update(null);
 		MEM.value.set(null);
 		MEM.value.update(null);
-
 	});
 }

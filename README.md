@@ -9,6 +9,9 @@
 * Calculates Numbers
 
 # TO DO #
-* Clear / Backspace Button
-* Working Math
-* Add Math Functions (SQUARE ROOT, EXPONENT)
+* SQRT, EXP, FAC Buttons
+* Plus/Minus Button
+* Keyboard Support
+* Backspace
+* Clear
+* Style
