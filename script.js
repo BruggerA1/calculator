@@ -65,10 +65,12 @@ const MEM = {
 
 const NUM = {
 	key: {
-		'dec': document.getElementById('calc-decimal'),
+		'dec': document.getElementById('calc-dec'),
+		'plus-minus':document.getElementById('calc-plus-minus'),
 	},
 	value: {
 		'dec': '.',
+		'plus-minus': '- / +'
 	},
 	input: value => {
 		// Handle decimal input.
@@ -95,6 +97,12 @@ const NUM = {
 		};
 		NUM.key['dec'].innerText = NUM.value['dec'];
 		NUM.key['dec'].addEventListener('click', () => NUM.input('.'));
+		NUM.key['plus-minus'].innerText = NUM.value['plus-minus'];
+		NUM.key['plus-minus'].addEventListener('click', () => {
+			// change sign of entry.
+			MEM.entry.set(MEM.entry.get()* -1);
+		});
+
 	},
 };
 

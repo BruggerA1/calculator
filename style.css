@@ -74,9 +74,3 @@
 	height: var(--buttonSize);
 	width: var(--buttonSize);
 }
-
-#calc-0 {
-	width: calc(2 * var(--buttonSize));
-}
-
-/* temp  */
